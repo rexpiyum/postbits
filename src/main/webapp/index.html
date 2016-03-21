@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="helper.js"></script>
+
+</head>
+<body>
+
+<div data-role="page" id="home_page">
+    <div data-role="header">
+        <h1>Active postBits</h1>
+    </div>
+
+    <ul id="new_deviceList" data-role="listview"></ul>
+
+    <ul id="blank_deviceList" data-role="listview"></ul>
+
+    <ul id="deviceList" data-role="listview"></ul>
+    <script>
+        selectedAddress = "default"
+        createDeviceList();
+        $('#deviceList').children('li').bind('touchstart mousedown', function(e) {
+            setSelectedAddress($(this).attr('data-name'));
+            });
+
+        $('#new_deviceList').children('li').bind('touchstart mousedown', function(e) {
+            setSelectedAddress($(this).attr('data-name'));
+            });
+
+        $('#blank_deviceList').children('li').bind('touchstart mousedown', function(e) {
+            setSelectedAddress($(this).attr('data-name'));
+            });
+
+
+    </script>
+</div>
+
+<div data-role="page" data-dialog="true" id="config_page">
+
+    <div id = "config_page_header" data-role="header">
+        <h1>Configure</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <h3 id="config_id_text">postBit ID:</h3>
+        <label for="config_title_text">Title:</label>
+        <input type="text" data-clear-btn="true" id="config_title_text" value="">
+        <label for="config_location_text">Location:</label>
+        <input type="text" data-clear-btn="true" id="config_location_text" value="">
+
+    </div>
+
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#home_page" onclick="updateDevice()" class="ui-btn">Save</a>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div data-role="page" data-dialog="true" id="add_mapping_page">
+
+    <div id = "add_mapping_header" data-role="header">
+        <h1>Content Types</h1>
+    </div>
+
+    <div class="ui-grid-b">
+        <div class="ui-block-a"><a href='#add_text_page'><img src='0.png'></a></div>
+        <div class="ui-block-b"><a href='#add_list_page'><img src='1.png'></a></div>
+        <div class="ui-block-c"><a href='#add_image_page'><img src='4.png'></a></div>
+        <div class="ui-block-a"><a href='#add_twitter_page'><img src='3.png'></a></div>
+        <div class="ui-block-b"><a href='#add_weather_page'><img src='5.png'></a></div>
+        <div class="ui-block-c"><a href='#add_news_page'><img src='6P.png'></a></div>
+        <div class="ui-block-b"><a onclick='sendFLL()'><img src='7B.png'></a></div>
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="view_mapping_page">
+    <div id = "view_mapping_header" data-role="header">
+        <h2 id = "view_mapping_title"><span>CSszdss</span></h2>
+
+    </div>
+    <div data-role="main" class="ui-content">
+        <label for="view_content_text">Current Content:</label>
+        <textarea type="text" readonly="true" data-clear-btn="true" id="view_content_text" value=""></textarea>
+    </div>
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#config_page" data-role="button" data-icon="gear" data-inline="true" >Configure</a>
+            <a href="#add_mapping_page" data-role="button" data-icon="plus" data-inline="true" >New Content</a>
+        </div>
+
+
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="view_mapping_page_image">
+    <div id = "view_mapping_image_header" data-role="header">
+        <h2 id = "view_mapping_image_title"><span>CSszdss</span></h2>
+
+    </div>
+    <div data-role="main" class="ui-content">
+        <label for="view_content_image">Current Image:</label>
+        <img style="margin-left:auto; margin-right:auto" id="view_content_image" src="">
+
+    </div>
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#config_page" data-role="button" data-icon="gear" data-inline="true" >Configure</a>
+            <a href="#add_mapping_page" data-role="button" data-icon="plus" data-inline="true" >New Content</a>
+        </div>
+
+
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="add_text_page">
+    <div id = "add_text_header" data-role="header">
+        <h1>Text Content</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+        <label for="add_text_text">Message:</label>
+        <textarea type="text" data-clear-btn="true" id="add_text_text" value=""></textarea>
+    </div>
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#home_page" onclick="sendText()" class="ui-btn">Send</a>
+        </div>
+
+
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="add_list_page">
+    <div id = "add_list_header" data-role="header">
+        <h1>List Content</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+        <fieldset data-role="controlgroup">
+            <label for="new_radio">Create new List</label>
+            <input type="radio" name="gender" id="new_radio" value="male" checked>
+            <label for="append_radio">Append to current list</label>
+            <input type="radio" name="gender" id="append_radio" value="female">
+        </fieldset>
+
+        <label for="add_list_text">List Item:</label>
+        <textarea type="text" data-clear-btn="true" id="add_list_text" value=""></textarea>
+    </div>
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#home_page" onclick="sendList()" class="ui-btn">Send</a>
+        </div>
+
+
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="add_twitter_page">
+    <div id = "add_twitter_header" data-role="header">
+        <h1>Twitter Content</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+        <label for="add_feed_text">Feed Name:</label>
+        <textarea type="text" data-clear-btn="true" id="add_feed_text" value=""></textarea>
+    </div>
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#home_page" onclick="sendTwitter()" class="ui-btn">Send</a>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div data-role="page" data-dialog="true" id="add_weather_page">
+    <div id = "add_weather_header" data-role="header">
+        <h1>Weather Content</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+        <label for="add_weather_text">City Name:</label>
+        <textarea type="text" data-clear-btn="true" id="add_weather_text" value=""></textarea>
+
+    </div>
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#home_page" onclick="sendWeather()" class="ui-btn">Send</a>
+        </div>
+
+
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="add_news_page">
+    <div id = "add_news_header" data-role="header">
+        <h1>CNN News Head Lines</h1>
+    </div>
+    <!--<div data-role="main" class="ui-content">-->
+        <!--<label for="add_weather_text">City Name:</label>-->
+        <!--<textarea type="text" data-clear-btn="true" id="add_weather_text" value=""></textarea>-->
+
+    <!--</div>-->
+    <h4>Select News Category</h4>
+    <div class="ui-field-contain">
+
+        <select name="add_news_select" id="add_news_select" data-mini="true">
+            <option value="1">World</option>
+            <option value="2">Politics</option>
+            <option value="3">Technology</option>
+            <option value="4">Health</option>
+            <option value="5">Travel</option>
+            <option value="6">Entertainment</option>
+        </select>
+    </div>
+
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#home_page" onclick="sendNews()" class="ui-btn">Send</a>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div data-role="page" data-dialog="true" id="add_image_page">
+    <div id = "add_image_header" data-role="header">
+        <h1>Image Content</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+
+        <input type="file" id="myFile">
+        <img id="image_preview" class="thumb" width="150"/>
+        <script>
+            document.getElementById('myFile').addEventListener('change', handleFileSelect, false);
+        </script>
+
+    </div>
+    <div data-role="footer">
+
+        <div data-role="main" class="ui-content" style="text-align:center">
+            <a href="#home_page" onclick="imageUpload()" class="ui-btn">Send</a>
+        </div>
+
+
+    </div>
+</div>
+
+
+</body>
+</html>

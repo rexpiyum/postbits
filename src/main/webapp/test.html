@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="helper.js"></script>
+
+</head>
+<body>
+<img id="ItemPreview" src="" />
+<script>
+
+    var xmlHttp = new XMLHttpRequest();
+xmlHttp.open( "GET", "http://192.168.1.4:9763/cloudDrop_backend/services/data/image/0013a20040ad5783", false );
+xmlHttp.send( null );
+data =  xmlHttp.responseText;
+    document.getElementById("ItemPreview").src = "data:image/png;base64," + data;
+</script>
+
+
+
+</body>
+</html>
